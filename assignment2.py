@@ -18,8 +18,8 @@ x_max = max(data1_x)
 y_min = min(data1_y)
 y_max = max(data1_y)
 
-x_scale = width / (x_max- x_min)
-y_scale = height / (y_max - y_min)
+x_scale = (width-100) / (x_max- x_min)
+y_scale = (height-100)/ (y_max - y_min)
 
 window = tk.Tk()  # The window is an object of type 'tk'
 window.title("Scatter Plot")  # Title
@@ -38,19 +38,19 @@ def scatter(x,y):
 
     #ticker for x-axis
     for i in range (int(x_min), int(x_max), 10):
-        canvas.create_line(width / 2 + i * x_scale, height/2 + 5, width/2 + 2*x_scale, height/2 - 5)
-        canvas.create_text(width / 2 + i * x_scale, height/2 + 20, text=str(i), anchor=tk.S)
+        canvas.create_line(width / 2 + i * x_scale, height/2 + 5, width/2 + i * x_scale, height/2 - 5)
+        canvas.create_text(width / 2 + i * x_scale, height/2 + 20, text = str(i), anchor=tk.S)
 
-        canvas.create_line(width/2 - i * x_scale, height/2 + 5, width/2 - i*x_scale, height/2 -5)
-        canvas.create_text(width/2 - i*x_scale, height /2 + 20, text = str(-i), anchor=tk.S)
+        canvas.create_line(width/2 - i * x_scale, height/2 + 5, width/2 - i * x_scale, height/2 -5)
+        canvas.create_text(width/2 - i * x_scale, height /2 + 20, text = str(-i), anchor=tk.S)
 
     #ticker for y-axis
-    for i in range( int(y_min), int(y_max),  10):
+    for i in range(int(y_min), int(y_max),  10):
         canvas.create_line(width / 2 + 5, height/2 - i*y_scale , width/2 -5, height/2 - i* y_scale)
-        canvas.create_text(width/2+ 20, height/2 - i * y_scale, text = str(i), anchor=tk.E)
+        canvas.create_text(width / 2 + 20, height/2 - i * y_scale, text = str(i), anchor=tk.E)
 
-        canvas.create_line(width/2 + 5, height / 2 + i * y_scale, width/2 - 5, height/2 + i*y_scale)
-        canvas.create_text(width/2 + 20, height / 2 + i*y_scale, text = str(-i), anchor=tk.E)
+        canvas.create_line(width / 2 + 5, height / 2 + i * y_scale, width/2 - 5, height/2 + i*y_scale)
+        canvas.create_text(width / 2 + 20, height / 2 + i*y_scale, text = str(-i), anchor=tk.E)
 
 
     # draw the points
