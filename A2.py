@@ -30,25 +30,22 @@ y_range = max(abs(y_min), abs(y_max)) * 2 + 50
 kx = (x_max - x_min) / x_range
 ky = (y_max - y_min) / y_range
 #Max min scaling
-x_scale = (width-80) / (x_max - x_min)
-y_scale = (height- 80) / (y_max - y_min)
+x_scale = (width- 80) / (x_max - x_min) if x_max - x_min != 0 else 1
+y_scale = (height- 80) / (y_max - y_min) if y_max - y_min != 0 else 1
 
-def determine_quadrants(x0, y0, x, y):
+
+def determine_quadrants(x, y):
     #x0, y0 relative to the screen
     #x, y relative to the data
-    x = x * kx + x0
-    y = y * ky + y0
 
-    if x > x0 and y < y0:
+    if x >= 0 and y >= 0:
         return 1
-    elif x < x0 and y < y0:
+    elif x <= 0 and y >= 0:
         return 2
-    elif x < x0 and y > y0:
+    elif x <= 0 and y <= 0:
         return 3
-    elif x > x0 and y > y0:
-        return 4
     else:
-        return 0
+        return 4
 
 def determine_quadrant_color(quadrant):
     if quadrant == 1:
@@ -71,7 +68,7 @@ def euclidean_distance(x0, y0, x, y):
 colors = []
 colors2letters = {}
 def determine_color(data_l, letter):
-    colors = ['blue', 'red', 'yellow', 'green', 'white', 'black', 'cyan']
+    colors = ['green', 'yellow', 'red', 'green', 'white', 'black', 'cyan']
     colors2letters = {letter: colors[i % len(colors)]
                       for i, letter in enumerate(data_l.unique())}
 
@@ -148,7 +145,7 @@ def draw_data(canvas, data_x, data_y, data_l, x_scale, y_scale, x0, y0):
         x = data_x[i]
         y = data_y[i]
         letter = data_l[i]
-        quadrant = determine_quadrants(x0, y0, x, y)
+        quadrant = determine_quadrants( x, y)
         color = determine_quadrant_color(quadrant)
         #Different shapes for each unique letter
         if letter == data_l.unique()[0]:
